@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { PostInterface } from './post.interface';
 import { PostsService } from '../services/posts.service';
+import { AppError } from '../common/app.error';
+import { NotFoundError } from '../common/not-found-error';
+import { BadRequestError } from '../common/bad-request-error';
 
 @Component({
   selector: 'http-posts-list',
@@ -33,8 +36,12 @@ export class HttpPostsListComponent implements OnInit {
         response => {
           this.posts.splice(0, 0, response.json());
         },
-        error => {
-          console.log(error);
+        (error: AppError) => {
+          if (error instanceof BadRequestError) {
+            console.log('Bad request');
+          } else {
+            console.log(error);
+          }
         });
   }
 
@@ -44,8 +51,8 @@ export class HttpPostsListComponent implements OnInit {
         let index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
       },
-      (error: Response) => {
-        if (error.status === 404) {
+      (error: AppError) => {
+        if (error instanceof NotFoundError) {
           console.log('This post is already deleted.');
         } else {
           console.log(error);

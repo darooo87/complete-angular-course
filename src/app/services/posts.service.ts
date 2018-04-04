@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { PostInterface } from '../http-posts-list/post.interface';
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw'
+import { AppError } from '../common/app.error';
+import { NotFoundError } from '../common/not-found-error';
+import { BadRequestError } from '../common/bad-request-error';
 
 @Injectable()
 export class PostsService {
@@ -13,15 +19,27 @@ export class PostsService {
     return this.http.get(this.url);
   }
 
-  addPost(post){
-    return this.http.post(this.url, post);
+  addPost(post) {
+    return this.http.post(this.url, post).catch((error: Response) => {
+      if (error.status === 400)
+        return Observable.throw(new BadRequestError(error));
+
+      return Observable.throw(new AppError(error));
+    });
   }
 
-  deletePost(id: number){
-    return this.http.delete(this.url + '/' + id);
+  deletePost(id: number) {
+    return this.http
+      .delete(this.url + '/' + id)
+      .catch((error: Response) => {
+        if (error.status === 404)
+          return Observable.throw(new NotFoundError());
+
+        return Observable.throw(new AppError(error));
+      });
   }
 
-  updatePost(post : PostInterface){
+  updatePost(post: PostInterface) {
     return this.http.put(this.url, post);
   }
 }
