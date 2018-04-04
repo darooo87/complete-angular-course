@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { PostInterface } from './post.interface';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'http-posts-list',
@@ -9,38 +10,33 @@ import { PostInterface } from './post.interface';
 })
 export class HttpPostsListComponent implements OnInit {
   
-  constructor(private http: Http) {
-  }
-
-  ngOnInit(): void {
-    this.http.get(this.url).subscribe(response => {
-      this.posts = response.json();
-    });
+  constructor(private service: PostsService) {
   }
 
   public posts = [];
-  private url = "https://jsonplaceholder.typicode.com/posts";
+  
+  ngOnInit(): void {
+    this.service.getPosts().subscribe(response => { this.posts = response.json(); });
+  }
 
   addPost(title: HTMLInputElement) {
     let post = { title: title.value };
     title.value = '';
-    this.http.post(this.url, post).subscribe(response => {
-      this.posts.splice(0, 0, post);
+    this.service.addPost(post)
+    .subscribe(response => { 
+      this.posts.splice(0, 0, response.json()); 
     });
   }
 
   deletePost(post: PostInterface) {
-    this.http.delete(this.url + '/' + post.id).subscribe(response => {
+    this.service.deletePost(post.id).subscribe(response => {
       let index = this.posts.indexOf(post);
       this.posts.splice(index, 1);
     });
   }
 
   updatePost(post : PostInterface){
-    this.http.put(this.url, post).subscribe(response => {
-      
-    });
-    
+    this.service.updatePost(post).subscribe(response => { });
     // use this.http.patch to update only changed fields
   }
 }

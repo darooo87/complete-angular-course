@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http'
 
 import { AppComponent } from './app.component';
 import { HttpPostsListComponent } from './http-posts-list/http-posts-list.component';
+import { PostsService } from './services/posts.service';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { HttpPostsListComponent } from './http-posts-list/http-posts-list.compon
     BrowserModule,
     HttpModule
   ],
-  providers: [],
+  providers: [PostsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
