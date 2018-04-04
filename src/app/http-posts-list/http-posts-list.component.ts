@@ -7,14 +7,19 @@ import { PostInterface } from './post.interface';
   templateUrl: './http-posts-list.component.html',
   styleUrls: ['./http-posts-list.component.css']
 })
-export class HttpPostsListComponent {
-  posts = [];
-  private url = "https://jsonplaceholder.typicode.com/posts/";
+export class HttpPostsListComponent implements OnInit {
+  
   constructor(private http: Http) {
-    http.get(this.url).subscribe(response => {
+  }
+
+  ngOnInit(): void {
+    this.http.get(this.url).subscribe(response => {
       this.posts = response.json();
     });
   }
+
+  public posts = [];
+  private url = "https://jsonplaceholder.typicode.com/posts";
 
   addPost(title: HTMLInputElement) {
     let post = { title: title.value };
@@ -25,7 +30,7 @@ export class HttpPostsListComponent {
   }
 
   deletePost(post: PostInterface) {
-    this.http.delete(this.url + post.id).subscribe(response => {
+    this.http.delete(this.url + '/' + post.id).subscribe(response => {
       let index = this.posts.indexOf(post);
       this.posts.splice(index, 1);
     });
@@ -35,5 +40,7 @@ export class HttpPostsListComponent {
     this.http.put(this.url, post).subscribe(response => {
       
     });
+    
+    // use this.http.patch to update only changed fields
   }
 }

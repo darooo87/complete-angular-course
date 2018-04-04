@@ -1,0 +1,9 @@
+<h2 [textContent]="authors.length + ' Authors'">
+</h2>
+<ul>
+
+  <li *ngFor="let author of authors">
+    {{author}}
+    <button class="btn btn-primary">Remove</button>
+  </li>
+</ul>
