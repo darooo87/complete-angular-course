@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { PostInterface } from '../http-posts-list/post.interface';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw'
 import { AppError } from '../common/app.error';
 import { NotFoundError } from '../common/not-found-error';
@@ -16,24 +17,28 @@ export class DataService {
     getAll() {
         return this.http
             .get(this.url)
+            .map(response => response.json())
             .catch(this.handleError);
     }
 
     add(post) {
         return this.http
             .post(this.url, post)
+            .map(response => response.json())
             .catch(this.handleError);
     }
 
     delete(id: number) {
         return this.http
             .delete(this.url + '/' + id)
+            .map(response => response.json())
             .catch(this.handleError);
     }
 
     update(post: PostInterface) {
         return this.http
             .put(this.url, post)
+            .map(response => response.json())
             .catch(this.handleError);
     }
 

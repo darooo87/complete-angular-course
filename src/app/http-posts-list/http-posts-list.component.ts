@@ -19,21 +19,19 @@ export class HttpPostsListComponent implements OnInit {
   public posts = [];
 
   ngOnInit(): void {
-    this.service.getAll().subscribe(
-      response => {
-        this.posts = response.json();
-      });
+    this.service.getAll()
+      .subscribe(posts => this.posts = posts);
   }
 
   addPost(title: HTMLInputElement) {
     let post = { title: title.value };
+    this.posts.splice(0, 0, post);
     title.value = '';
     this.service.add(post)
       .subscribe(
-      response => {
-        this.posts.splice(0, 0, response.json());
-      },
+      newPost => post['id'] = newPost.id,
       (error: AppError) => {
+        this.posts.splice(0, 1);
         if (error instanceof BadRequestError) {
           alert('Bad request');
         } else throw error;
@@ -41,12 +39,13 @@ export class HttpPostsListComponent implements OnInit {
   }
 
   deletePost(post: PostInterface) {
+    let index = this.posts.indexOf(post);
+    this.posts.splice(index, 1);
+
     this.service.delete(post.id).subscribe(
-      response => {
-        let index = this.posts.indexOf(post);
-        this.posts.splice(index, 1);
-      },
+      null,
       (error: AppError) => {
+        this.posts.splice(index, 0, post);
         if (error instanceof NotFoundError) {
           alert('This post is already deleted.');
         } else throw error;
@@ -54,6 +53,6 @@ export class HttpPostsListComponent implements OnInit {
   }
 
   updatePost(post: PostInterface) {
-    this.service.update(post).subscribe(response => { });
+    this.service.update(post).subscribe(null);
   }
 }
