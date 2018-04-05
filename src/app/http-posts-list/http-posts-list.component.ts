@@ -19,7 +19,7 @@ export class HttpPostsListComponent implements OnInit {
   public posts = [];
 
   ngOnInit(): void {
-    this.service.getPosts().subscribe(
+    this.service.getAll().subscribe(
       response => {
         this.posts = response.json();
       });
@@ -28,7 +28,7 @@ export class HttpPostsListComponent implements OnInit {
   addPost(title: HTMLInputElement) {
     let post = { title: title.value };
     title.value = '';
-    this.service.addPost(post)
+    this.service.add(post)
       .subscribe(
       response => {
         this.posts.splice(0, 0, response.json());
@@ -41,7 +41,7 @@ export class HttpPostsListComponent implements OnInit {
   }
 
   deletePost(post: PostInterface) {
-    this.service.deletePost(post.id).subscribe(
+    this.service.delete(post.id).subscribe(
       response => {
         let index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
@@ -54,7 +54,6 @@ export class HttpPostsListComponent implements OnInit {
   }
 
   updatePost(post: PostInterface) {
-    this.service.updatePost(post).subscribe(response => { });
+    this.service.update(post).subscribe(response => { });
   }
-
 }
