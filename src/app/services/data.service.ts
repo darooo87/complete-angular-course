@@ -21,6 +21,13 @@ export class DataService {
             .catch(this.handleError);
     }
 
+    get(id: number){
+        return this.http
+            .get(this.url + '/' + id)
+            .map(response => response.json())
+            .catch(this.handleError);
+    }
+
     add(post) {
         return this.http
             .post(this.url, post)

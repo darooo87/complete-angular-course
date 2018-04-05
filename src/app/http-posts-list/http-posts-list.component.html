@@ -1,10 +1,7 @@
-<span class="badge badge-secondary">Http Posts List</span>
-
-<input type="text" class="form-control" #title (keyup.enter)="addPost(title)">
+<input type="text" class="form-control" #title (keyup.enter)="addPost(title)" placeholder="Add new post">
 
 <ul class="list-group">
-  <li *ngFor="let post of posts" class="list-group-item">
-    <button class="btn btn-primary">Update</button>
+  <li *ngFor="let post of posts" class="list-group-item" [routerLink]="['/post', post.id]">
     {{post.title}}
     <span class="glyphicon glyphicon-remove" (click)="deletePost(post)"></span>
   </li>
