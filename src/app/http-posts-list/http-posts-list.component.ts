@@ -22,9 +22,6 @@ export class HttpPostsListComponent implements OnInit {
     this.service.getPosts().subscribe(
       response => {
         this.posts = response.json();
-      },
-      error => {
-        console.log(error);
       });
   }
 
@@ -33,16 +30,14 @@ export class HttpPostsListComponent implements OnInit {
     title.value = '';
     this.service.addPost(post)
       .subscribe(
-        response => {
-          this.posts.splice(0, 0, response.json());
-        },
-        (error: AppError) => {
-          if (error instanceof BadRequestError) {
-            console.log('Bad request');
-          } else {
-            console.log(error);
-          }
-        });
+      response => {
+        this.posts.splice(0, 0, response.json());
+      },
+      (error: AppError) => {
+        if (error instanceof BadRequestError) {
+          alert('Bad request');
+        } else throw error;
+      });
   }
 
   deletePost(post: PostInterface) {
@@ -53,18 +48,13 @@ export class HttpPostsListComponent implements OnInit {
       },
       (error: AppError) => {
         if (error instanceof NotFoundError) {
-          console.log('This post is already deleted.');
-        } else {
-          console.log(error);
-        }
+          alert('This post is already deleted.');
+        } else throw error;
       });
   }
 
   updatePost(post: PostInterface) {
-    this.service.updatePost(post).subscribe(
-      response => { },
-      error => {
-        console.log(error);
-      });
+    this.service.updatePost(post).subscribe(response => { });
   }
+
 }

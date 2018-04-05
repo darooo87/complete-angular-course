@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http'
 import { AppComponent } from './app.component';
 import { HttpPostsListComponent } from './http-posts-list/http-posts-list.component';
 import { PostsService } from './services/posts.service';
+import { ErrorHandler } from '@angular/core';
+import { AppErrorHandler } from './common/app-error-handler';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { PostsService } from './services/posts.service';
     BrowserModule,
     HttpModule
   ],
-  providers: [PostsService],
+  providers: [
+    PostsService,
+    { provide: ErrorHandler, useClass: AppErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
