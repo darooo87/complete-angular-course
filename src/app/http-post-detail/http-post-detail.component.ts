@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostsService } from '../services/posts.service';
 import { PostInterface } from '../http-posts-list/post.interface';
+import 'rxjs/add/observable/combineLatest';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-http-post-detail',
@@ -15,14 +17,19 @@ export class HttpPostDetailComponent implements OnInit {
   post;
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      let id = +params.get('id');
-      console.log(id);
+
+    Observable.combineLatest([
+      this.route.paramMap,
+      this.route.queryParamMap
+
+    ]).subscribe(combined => {
+      let paramMap = combined[0];
+      let queryMap = combined[1];
+
+      let id = +paramMap.get('id');
       this.service.get(id).subscribe(post => {
         this.post = post
-        var tst = this.post;
       });
-
-    })
+    });
   }
 }
