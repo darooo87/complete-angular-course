@@ -5,6 +5,16 @@
         <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]="['']">Home</a></li>
         <li routerLinkActive="active"><a [routerLink]="['posts']">Posts</a></li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a></li>
+        <li class="dropdown" *ngIf="authService.isLoggedIn()">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{authService.currentUser?.name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a (click)="authService.logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
