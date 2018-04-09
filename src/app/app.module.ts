@@ -41,6 +41,7 @@ import { DataService } from './services/data.service';
     LoginComponent
   ],
   imports: [
+    HttpModule,
     BrowserModule,
     HttpModule,
     FormsModule,
@@ -56,11 +57,10 @@ import { DataService } from './services/data.service';
     AuthService,
     AuthGuard,
     PostsService,
-    DataService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    fakeBackendProvider,
-    MockBackend,
-    BaseRequestOptions
+    // fakeBackendProvider,
+    // MockBackend,
+    // BaseRequestOptions
   ],
   bootstrap: [AppComponent]
 })
