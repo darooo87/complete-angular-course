@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, BaseRequestOptions } from '@angular/http'
 import { RouterModule } from '@angular/router'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpPostsListComponent } from './http-posts-list/http-posts-list.component';
 import { PostsService } from './services/posts.service';
@@ -16,10 +16,23 @@ import { AuthGuard } from './services/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { MockBackend } from '@angular/http/testing';
+import { AuthorsComponent } from './authors/authors.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
+import { InputFormatDirective } from './directives/input-format.directive';
+import { NoAccessComponent } from './no-access/no-access.component';
+import { SummaryPipe } from './pipes/summary.pipe';
+import { SignupFormComponent } from './signup-form/signup-form.component';
+import { DataService } from './services/data.service';
 
 
 @NgModule({
   declarations: [
+    AuthorsComponent,
+    ContactFormComponent,
+    InputFormatDirective,
+    NoAccessComponent,
+    SummaryPipe,
+    SignupFormComponent,
     AppComponent,
     HttpPostsListComponent,
     NavbarComponent,
@@ -31,6 +44,7 @@ import { MockBackend } from '@angular/http/testing';
     BrowserModule,
     HttpModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'posts', component: HttpPostsListComponent },
@@ -42,6 +56,7 @@ import { MockBackend } from '@angular/http/testing';
     AuthService,
     AuthGuard,
     PostsService,
+    DataService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     fakeBackendProvider,
     MockBackend,
