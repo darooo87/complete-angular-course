@@ -1,23 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { transition, style, animate, trigger, state } from '@angular/animations';
+import { fade } from './animations';
 
 @Component({
   selector: 'app-animations',
   templateUrl: './animations.component.html',
   styleUrls: ['./animations.component.css'],
   animations: [
-    trigger('fade', [
-      
-      state('void', style({ opacity: 0 })),
-
-      transition('void => *', [
-        animate(500)
-      ]),
-
-      transition('* => void', [
-        animate(500)
-      ])
-    ])
+    fade
   ]
 })
 export class AnimationsComponent {
