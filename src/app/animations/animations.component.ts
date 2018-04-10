@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { fade } from './animations';
+import { fade, slide, bounce } from './animations';
 
 @Component({
   selector: 'app-animations',
   templateUrl: './animations.component.html',
   styleUrls: ['./animations.component.css'],
   animations: [
-    fade
+    bounce
   ]
 })
 export class AnimationsComponent {
