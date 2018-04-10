@@ -23,7 +23,12 @@ import { NoAccessComponent } from './no-access/no-access.component';
 import { SummaryPipe } from './pipes/summary.pipe';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { DataService } from './services/data.service';
-
+import { AngularFireModule } from 'angularfire2'
+import { AngularFireDatabaseModule } from 'angularfire2/database'
+import { environment } from '../environments/environment';
+import { DatabaseCoursesComponent } from './database-courses/database-courses.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AnimationsComponent } from './animations/animations.component'
 
 @NgModule({
   declarations: [
@@ -38,7 +43,9 @@ import { DataService } from './services/data.service';
     NavbarComponent,
     HomeComponent,
     HttpPostDetailComponent,
-    LoginComponent
+    LoginComponent,
+    DatabaseCoursesComponent,
+    AnimationsComponent
   ],
   imports: [
     HttpModule,
@@ -51,7 +58,12 @@ import { DataService } from './services/data.service';
       { path: 'posts', component: HttpPostsListComponent },
       { path: 'post/:id', component: HttpPostDetailComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'courses', component: DatabaseCoursesComponent },
+      { path: 'animations', component: AnimationsComponent }
     ]),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService,

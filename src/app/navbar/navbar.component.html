@@ -4,6 +4,8 @@
       <ul class="nav navbar-nav">
         <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]="['']">Home</a></li>
         <li routerLinkActive="active"><a [routerLink]="['posts']">Posts</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['courses']">Courses</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['animations']">Animations</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a></li>

@@ -1,0 +1,19 @@
+
+Courses:
+<ul>
+  <li *ngFor="let course of courses$ | async">
+    <button class="btn btn-primary" (click)="update(course)">Update</button>
+    <button class="btn btn-danger" (click)="delete(course)">Remove</button>
+    {{course.val}}
+  </li>
+</ul>
+
+Author:
+<ul *ngIf="author$ | async as author">
+  <li>{{ author.name }}</li>
+  <li>{{ author.isPremium }}</li>
+  <li>{{ author.students }}</li>
+</ul>
+
+New:
+<input type="text" (keyup.enter)="add(course)" #course>
