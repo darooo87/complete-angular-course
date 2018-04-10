@@ -8,7 +8,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build --prod && scp dist/* daroo@51.145.139.14:/home/daroo/dist/"
   },
   "private": true,
   "dependencies": {
